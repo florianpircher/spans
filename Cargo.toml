@@ -1,0 +1,12 @@
+[package]
+name = "spans"
+version = "1.0.0"
+authors = ["Florian Pircher <florian@addpixel.net>"]
+edition = "2018"
+description = "Split an iterator into contiguous spans."
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/florianpircher/spans"
+keywords = ["iterator", "split"]
+categories = ["rust-patterns"]
+
+[dependencies]

@@ -144,45 +144,51 @@ pub trait Spans: Iterator {
     ///
     /// ```
     /// use spans::Spans;
+    /// # fn test() -> Option<()> {
     ///
     /// let vec = vec![1, 2, 5, 6, 7, 11, 13, 14, 15];
     /// let mut spans = vec.iter().spans_by_key(|&&x| x, |a, b| a + 1 == b);
     ///
-    /// assert_eq!(spans.next().unwrap().collect::<Vec<_>>(), vec![&1, &2]);
-    /// assert_eq!(spans.next().unwrap().collect::<Vec<_>>(), vec![&5, &6, &7]);
-    /// assert_eq!(spans.next().unwrap().collect::<Vec<_>>(), vec![&11]);
-    /// assert_eq!(spans.next().unwrap().collect::<Vec<_>>(), vec![&13, &14, &15]);
+    /// assert_eq!(spans.next()?.collect::<Vec<_>>(), vec![&1, &2]);
+    /// assert_eq!(spans.next()?.collect::<Vec<_>>(), vec![&5, &6, &7]);
+    /// assert_eq!(spans.next()?.collect::<Vec<_>>(), vec![&11]);
+    /// assert_eq!(spans.next()?.collect::<Vec<_>>(), vec![&13, &14, &15]);
     /// assert!(spans.next().is_none());
+    /// # Some(())
+    /// # }
+    /// # fn main() { assert_eq!(test(), Some(())) }
     /// ```
     ///
     /// Create spans for strings of the same length:
     ///
     /// ```
     /// use spans::Spans;
+    /// # fn test() -> Option<()> {
     ///
     /// let vec = vec!["abc", "run", "tag", "go", "be", "ring", "zip", "zap", "put"];
     /// let mut spans = vec.iter().spans_by_key(|x| x.len(), |a, b| a == b);
     ///
     /// assert_eq!(
-    ///     spans.next().unwrap().collect::<Vec<_>>(),
+    ///     spans.next()?.collect::<Vec<_>>(),
     ///     vec![&"abc", &"run", &"tag"]
     /// );
     /// assert_eq!(
-    ///     spans.next().unwrap().collect::<Vec<_>>(),
+    ///     spans.next()?.collect::<Vec<_>>(),
     ///     vec![&"go", &"be"]
     /// );
     /// assert_eq!(
-    ///     spans.next().unwrap().collect::<Vec<_>>(),
+    ///     spans.next()?.collect::<Vec<_>>(),
     ///     vec![&"ring"]
     /// );
     /// assert_eq!(
-    ///     spans.next().unwrap().collect::<Vec<_>>(),
+    ///     spans.next()?.collect::<Vec<_>>(),
     ///     vec![&"zip", &"zap", &"put"]
     /// );
     /// assert!(spans.next().is_none());
+    /// # Some(())
+    /// # }
+    /// # fn main() { assert_eq!(test(), Some(())) }
     /// ```
-    ///
-    ///
     fn spans_by_key<K, C, F>(self, key: K, are_connected: F) -> SpansBy<Self, K, F>
     where
         K: Fn(&Self::Item) -> C,
